@@ -5,17 +5,15 @@ import { RainbowKitProvider, getDefaultWallets, connectorsForWallets, wallet } f
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { metaMask } from '@rainbow-me/rainbowkit/dist/wallets/walletConnectors/metaMask/metaMask';
+// import { metaMask } from '@rainbow-me/rainbowkit/dist/wallets/walletConnectors/metaMask/metaMask';
 
 
 const { chains, provider, webSocketProvider } = configureChains(
   [  
     
-    chain.rinkeby,
-    chain.mainnet,
-    chain.polygon,
-    // chain.avalance,
-    chain.arbitrum,
+    chain.goerli,
+    // chain.mainnet,
+    // chain.arbitrum,
     // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     //   ? [chain.goerli, chain.kovan, chain.rinkeby, chain.ropsten]
     //   : []),

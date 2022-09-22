@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 import {
   useAccount,
   useContractRead,
@@ -16,7 +17,7 @@ import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 import contractInterface from '../pages/constants/contract-abi.json';
 
 const contractConfig = {
-  addressOrName: '0x86fbbb1254c39602a7b067d5ae7e5c2bdfd61a30',
+  addressOrName: '0x4fF8Ec266fC9d133E4ff5f90930bD963362Cedce',
   contractInterface: contractInterface,
 };
 
@@ -24,40 +25,40 @@ const Home: NextPage = () => {
   const [totalMinted, setTotalMinted] = React.useState(0);
   const { isConnected } = useAccount();
 
-  const { config: contractWriteConfig } = usePrepareContractWrite({
-    ...contractConfig,
-    functionName: 'mint',
-  });
+  // const { config: contractWriteConfig } = usePrepareContractWrite({
+  //   ...contractConfig,
+  //   functionName: 'mint',
+  // });
 
-  const {
-    data: mintData,
-    write: mint,
-    isLoading: isMintLoading,
-    isSuccess: isMintStarted,
-    error: mintError,
-  } = useContractWrite(contractWriteConfig);
+  // const {
+  //   data: mintData,
+  //   write: mint,
+  //   isLoading: isMintLoading,
+  //   isSuccess: isMintStarted,
+  //   error: mintError,
+  // } = useContractWrite(contractWriteConfig);
 
-  const { data: totalSupplyData } = useContractRead({
+  const { data: getTokenIdsMinted } = useContractRead({
     ...contractConfig,
-    functionName: 'totalSupply',
+    functionName: 'tokenIds',
     watch: true,
   });
 
-  const {
-    data: txData,
-    isSuccess: txSuccess,
-    error: txError,
-  } = useWaitForTransaction({
-    hash: mintData?.hash,
-  });
+  // const {
+  //   data: txData,
+  //   isSuccess: txSuccess,
+  //   error: txError,
+  // } = useWaitForTransaction({
+  //   hash: mintData?.hash,
+  // });
 
   React.useEffect(() => {
-    if (totalSupplyData) {
-      setTotalMinted(totalSupplyData.toNumber());
+    if (getTokenIdsMinted) {
+      setTotalMinted(getTokenIdsMinted.toNumber());
     }
-  }, [totalSupplyData]);
+  }, [getTokenIdsMinted]);
 
-  const isMinted = txSuccess;
+  // const isMinted = txSuccess;
 
   return (
     <div className="page">
@@ -69,7 +70,7 @@ const Home: NextPage = () => {
               {totalMinted} minted so far!
             </p>
             <ConnectButton />
-
+{/* 
             {mintError && (
               <p style={{ marginTop: 24, color: '#FF6257' }}>
                 Error: {mintError.message}
@@ -79,9 +80,9 @@ const Home: NextPage = () => {
               <p style={{ marginTop: 24, color: '#FF6257' }}>
                 Error: {txError.message}
               </p>
-            )}
+            )} */}
 
-            {isConnected && !isMinted && (
+            {/* {isConnected && !isMinted && (
               <button
                 style={{ marginTop: 24 }}
                 disabled={!mint || isMintLoading || isMintStarted}
@@ -94,10 +95,10 @@ const Home: NextPage = () => {
                 {isMintStarted && 'Minting...'}
                 {!isMintLoading && !isMintStarted && 'Mint'}
               </button>
-            )}
+            )} */}
           </div>
         </div>
-
+{/* 
         <div style={{ flex: '0 0 auto' }}>
           <FlipCard>
             <FrontCard isCardFlipped={isMinted}>
@@ -121,27 +122,27 @@ const Home: NextPage = () => {
                   style={{ borderRadius: 8 }}
                 />
                 <h2 style={{ marginTop: 24, marginBottom: 6 }}>NFT Minted!</h2>
-                <p style={{ marginBottom: 24 }}>
+                <h3 style={{ marginBottom: 24 }}>
                   Your NFT will show up in your wallet in the next few minutes.
-                </p>
-                <p style={{ marginBottom: 6 }}>
+                </h3>
+                <h3 style={{ marginBottom: 6 }}>
                   View on{' '}
                   <a href={`https://rinkeby.etherscan.io/tx/${mintData?.hash}`}>
                     Etherscan
                   </a>
-                </p>
-                <p>
+                </h3>
+                <h3>
                   View on{' '}
                   <a
                     href={`https://testnets.opensea.io/assets/rinkeby/${txData?.to}/1`}
                   >
                     Opensea
                   </a>
-                </p>
+                </h3>
               </div>
             </BackCard>
           </FlipCard>
-        </div>
+        </div> */}
       </div>
     </div>
   );
